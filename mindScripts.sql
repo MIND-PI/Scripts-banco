@@ -34,6 +34,34 @@ CONSTRAINT pk_clp PRIMARY KEY (id),
 CONSTRAINT fk_usuario FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
 
+DROP TABLE IF EXISTS recurso; 
+CREATE TABLE recurso(
+id INT AUTO_INCREMENT,
+nome_recurso VARCHAR(100),
+unidade_medida VARCHAR(5),
+descricao VARCHAR(100),
+criado_em TIMESTAMP DEFAULT (current_timestamp()) NOT NULL,
+atualizado_em TIMESTAMP,
+desativado_em TIMESTAMP,
+CONSTRAINT pk_recurso_monitorado PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS recurso_monitorado;
+CREATE TABLE recurso_monitorado(
+id INT AUTO_INCREMENT,
+id_clp INT,
+id_recurso INT,
+estatus TINYINT NOT NULL DEFAULT (1),
+criado_em TIMESTAMP DEFAULT (current_timestamp()) NOT NULL,
+atualizado_em TIMESTAMP,
+desativado_em TIMESTAMP,
+CONSTRAINT pk_recurso_monitorado PRIMARY KEY(id),
+CONSTRAINT fk_clp_id FOREIGN KEY (id_clp) REFERENCES clp(id),
+CONSTRAINT fk_recurso_id FOREIGN KEY (id_recurso) REFERENCES recurso(id),
+CONSTRAINT chk_status CHECK (estatus IN (1, 2))
+);
+
+
 DROP TABLE IF EXISTS alerta;
 CREATE TABLE alerta(
 id INT AUTO_INCREMENT,
