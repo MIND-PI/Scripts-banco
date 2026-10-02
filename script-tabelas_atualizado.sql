@@ -7,10 +7,10 @@ CREATE TABLE empresa(
     nome_fantasia VARCHAR(255),
     razao_social VARCHAR(255),
     cnpj VARCHAR(14),
-    data_criacao DATETIME,
-    data_atualizacao DATETIME,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     codigo_ativacao VARCHAR(16),
-    setor VARCHAR(100),
+    setor VARCHAR(100) DEFAULT 'fornecedor',
     fornecedorId INT,
 
     CONSTRAINT fk_empresa_fornecedor
@@ -26,8 +26,8 @@ CREATE TABLE usuario(
     empresaId INT,
     cargo VARCHAR(100),
     responsavel INT,
-    data_criacao DATETIME,
-    data_atualizacao DATETIME,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     url_img VARCHAR(1000),
 
     CONSTRAINT fk_usuario_empresa
@@ -45,20 +45,20 @@ CREATE TABLE modelo(
     empresaId INT,
     
     CONSTRAINT fk_modelo_empresa
-		FOREIGN KEY (empresaId)
+        FOREIGN KEY (empresaId)
         REFERENCES empresa(idEmpresa)
 );
 
 CREATE TABLE clp(
     idClp INT AUTO_INCREMENT,
     empresaId INT,
-    data_criacao DATETIME,
-    data_atualizacao DATETIME,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     status TINYINT,
     localizacao VARCHAR(255),
     modeloId INT,
 
-	PRIMARY KEY (idClp, empresaId),
+    PRIMARY KEY (idClp, empresaId),
     
     CONSTRAINT fk_clp_empresa
         FOREIGN KEY (empresaId)
@@ -93,6 +93,3 @@ CREATE TABLE clp_medicao(
         FOREIGN KEY (tipoMedicaoId)
         REFERENCES tipo_medicao(idTipoMedicao)
 );
-
-
-
