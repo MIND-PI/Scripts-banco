@@ -10,6 +10,7 @@ CREATE TABLE empresa(
     data_criacao DATETIME,
     data_atualizacao DATETIME,
     codigo_ativacao VARCHAR(16),
+    setor VARCHAR(100),
     fornecedorId INT,
 
     CONSTRAINT fk_empresa_fornecedor
@@ -27,6 +28,7 @@ CREATE TABLE usuario(
     responsavel INT,
     data_criacao DATETIME,
     data_atualizacao DATETIME,
+    url_img VARCHAR(1000),
 
     CONSTRAINT fk_usuario_empresa
         FOREIGN KEY (empresaId)
@@ -39,17 +41,25 @@ CREATE TABLE usuario(
 
 CREATE TABLE modelo(
     idmodelo INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(45)
+    nome VARCHAR(45),
+    empresaId INT,
+    
+    CONSTRAINT fk_modelo_empresa
+		FOREIGN KEY (empresaId)
+        REFERENCES empresa(idEmpresa)
 );
 
 CREATE TABLE clp(
-    idClp INT PRIMARY KEY AUTO_INCREMENT,
+    idClp INT AUTO_INCREMENT,
     empresaId INT,
     data_criacao DATETIME,
     data_atualizacao DATETIME,
     status TINYINT,
+    localizacao VARCHAR(255),
     modeloId INT,
 
+	PRIMARY KEY (idClp, empresaId),
+    
     CONSTRAINT fk_clp_empresa
         FOREIGN KEY (empresaId)
         REFERENCES empresa(idEmpresa),
@@ -61,25 +71,28 @@ CREATE TABLE clp(
 
 CREATE TABLE tipo_medicao(
     idTipoMedicao INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(45),
-    unidade_medida VARCHAR(45),
+    nome VARCHAR(100),
+    unidade_medida VARCHAR(100),
     apelido VARCHAR(45),
     descricao TEXT
 );
 
 CREATE TABLE clp_medicao(
-    servidorId INT,
-    medicaoId INT,
+    clpId INT,
+    tipoMedicaoId INT,
     ativo TINYINT,
     parametro INT,
 
-    PRIMARY KEY (servidorId, medicaoId),
+    PRIMARY KEY (clpId, tipoMedicaoId),
 
     CONSTRAINT fk_clp_medicao_clp
-        FOREIGN KEY (servidorId)
+        FOREIGN KEY (clpId)
         REFERENCES clp(idClp),
 
     CONSTRAINT fk_clp_medicao_tipo
-        FOREIGN KEY (medicaoId)
+        FOREIGN KEY (tipoMedicaoId)
         REFERENCES tipo_medicao(idTipoMedicao)
 );
+
+
+
