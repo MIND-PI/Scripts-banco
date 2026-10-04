@@ -92,15 +92,29 @@ CREATE TABLE clp_medicao(
         REFERENCES tipo_medicao(idTipoMedicao)
 );
 
-INSERT INTO empresa
-(idEmpresa, nome_fantasia, razao_social, cnpj, codigo_ativacao, setor, fornecedorId)
-VALUES
 
+-- =======================================
+-- FORNECEDORES
+-- 1 = Siemens
+-- 2 = Schneider Electric
+-- 3 = Rockwell Automation
+-- ========================================
+-- CLIENTES
+-- 4 = Mitsubishi Electric
+5 = Petrobras
+6 = Vale
+7 = Gerdau
+8 = Suzano
+9 = Braskem
+10 = Ambev
 -- =========================================================
 -- FORNECEDORES / FABRICANTES DE CLP
 -- fornecedorId = NULL
 -- =========================================================
 
+INSERT INTO empresa
+(idEmpresa, nome_fantasia, razao_social, cnpj, codigo_ativacao, setor, fornecedorId)
+VALUES
 (1,
  'Siemens',
  'Siemens Brasil Ltda.',
@@ -251,6 +265,85 @@ VALUES
 (5, 'ControlLogix', 3),
 (6, 'CompactLogix', 3);
  
- 
+ -- =========================================================
+-- TIPOS DE MEDIÇÃO
+-- =========================================================
+
+INSERT INTO tipo_medicao
+(idTipoMedicao, nome, unidade_medida, apelido, descricao)
+VALUES
+
+-- 1
+(1,
+ 'Utilização de CPU',
+ '%',
+ 'CPU',
+ 'Percentual de utilização do processador do sistema monitorado.'),
+
+-- 2
+(2,
+ 'Utilização de RAM',
+ '%',
+ 'RAM',
+ 'Percentual de utilização da memória RAM do sistema monitorado.'),
+
+-- 3
+(3,
+ 'Uptime do Sistema',
+ '%',
+ 'UPTIME',
+ 'Percentual de disponibilidade do sistema durante o período monitorado.'),
+
+-- 4
+(4,
+ 'Utilização de Memória Swap',
+ '%',
+ 'SWAP',
+ 'Percentual de utilização da memória swap do sistema.'),
+
+-- 5
+(5,
+ 'Scan Time',
+ 'ms',
+ 'SCAN',
+ 'Tempo necessário para a execução de um ciclo do sistema monitorado.'),
+
+-- 6
+(6,
+ 'Latência de Rede',
+ 'ms',
+ 'PING',
+ 'Tempo de resposta da comunicação entre o sistema monitorado e o destino configurado.'),
+
+-- 7
+(7,
+ 'Perda de Pacotes',
+ 'pacotes',
+ 'LOSS',
+ 'Quantidade de erros de entrada e saída registrados na comunicação de rede.'),
+
+-- 8
+(8,
+ 'Dados Enviados',
+ 'GB',
+ 'UPLOAD',
+ 'Quantidade acumulada de dados enviados pela interface de rede.'),
+
+-- 9
+(9,
+ 'Dados Recebidos',
+ 'GB',
+ 'DOWNLOAD',
+ 'Quantidade acumulada de dados recebidos pela interface de rede.'),
+
+-- 10
+(10,
+ 'Processos de Maior Consumo',
+ 'processos',
+ 'PROCESSOS',
+ 'Ranking dos processos que apresentam maior utilização de CPU no sistema monitorado.')
+;
+
+
  
  
