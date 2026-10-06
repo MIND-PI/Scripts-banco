@@ -11,6 +11,7 @@ CREATE TABLE empresa(
     data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     codigo_ativacao VARCHAR(16),
     setor VARCHAR(100) DEFAULT 'fornecedor',
+    tipo VARCHAR(100) DEFAULT 'fornecedor' CHECK (tipo IN ('fornecedor', 'cliente fornecedor')) NOT NULL,
     fornecedorId INT,
 
     CONSTRAINT fk_empresa_fornecedor
@@ -122,28 +123,31 @@ CREATE TABLE clp_medicao(
 -- =========================================================
 
 INSERT INTO empresa
-(idEmpresa, nome_fantasia, razao_social, cnpj, codigo_ativacao, setor)
+(idEmpresa, nome_fantasia, razao_social, cnpj, codigo_ativacao, setor, tipo)
 VALUES
 (1,
  'Siemens',
  'Siemens Brasil Ltda.',
  '00000000000101',
  'SIEMENS2026',
- 'fornecedor'),
+ 'fornecedor',
+ default),
 
 (2,
  'Schneider Electric',
  'Schneider Electric Brasil Ltda.',
  '00000000000202',
  'SCHNEI2026',
- 'fornecedor'),
+ 'fornecedor',
+ default),
 
 (3,
  'Rockwell Automation',
  'Rockwell Automation do Brasil Ltda.',
  '00000000000303',
  'ROCK2026',
- 'fornecedor'),
+ 'fornecedor',
+ default),
 
 
 -- =========================================================
@@ -155,49 +159,56 @@ VALUES
  'Mitsubishi Electric do Brasil Comércio e Serviços Ltda.',
  '00000000000404',
  'MITSU2026',
- 'Automação Industrial'),
+ 'Automação Industrial',
+ 'cliente fornecedor'),
 
 (5,
  'Petrobras',
  'Petróleo Brasileiro S.A. - Petrobras',
  '00000000000505',
  'PETRO2026',
- 'Óleo e Gás'),
+ 'Óleo e Gás',
+ 'cliente fornecedor'),
 
 (6,
  'Vale',
  'Vale S.A.',
  '00000000000606',
  'VALE2026',
- 'Mineração'),
+ 'Mineração',
+ 'cliente fornecedor'),
 
 (7,
  'Gerdau',
  'Gerdau S.A.',
  '00000000000707',
  'GERDAU2026',
- 'Siderurgia'),
+ 'Siderurgia',
+ 'cliente fornecedor'),
 
 (8,
  'Suzano',
  'Suzano S.A.',
  '00000000000808',
  'SUZANO2026',
- 'Papel e Celulose'),
+ 'Papel e Celulose',
+ 'cliente fornecedor'),
 
 (9,
  'Braskem',
  'Braskem S.A.',
  '00000000000909',
  'BRASK2026',
- 'Petroquímica'),
+ 'Petroquímica',
+ 'cliente fornecedor'),
 
 (10,
  'Ambev',
  'Ambev S.A.',
  '00000000001010',
  'AMBEV2026',
- 'Bebidas');
+ 'Bebidas',
+ 'cliente fornecedor');
  
  -- ===============================================
  -- ATIVAÇÃO
