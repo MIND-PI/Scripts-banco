@@ -18,6 +18,15 @@ CREATE TABLE empresa(
         REFERENCES empresa(idEmpresa)
 );
 
+CREATE TABLE ativacao(
+	idFornecedor INT,
+    idCliente INT,
+    PRIMARY KEY(idFornecedor, idCliente),
+	
+    FOREIGN KEY (idFornecedor) REFERENCES empresa(idEmpresa),
+    FOREIGN KEY (idCliente) REFERENCES empresa(idEmpresa)
+);
+
 CREATE TABLE usuario(
     idUsuario INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
@@ -113,36 +122,32 @@ CREATE TABLE clp_medicao(
 -- =========================================================
 
 INSERT INTO empresa
-(idEmpresa, nome_fantasia, razao_social, cnpj, codigo_ativacao, setor, fornecedorId)
+(idEmpresa, nome_fantasia, razao_social, cnpj, codigo_ativacao, setor)
 VALUES
 (1,
  'Siemens',
  'Siemens Brasil Ltda.',
  '00000000000101',
  'SIEMENS2026',
- 'fornecedor',
- NULL),
+ 'fornecedor'),
 
 (2,
  'Schneider Electric',
  'Schneider Electric Brasil Ltda.',
  '00000000000202',
  'SCHNEI2026',
- 'fornecedor',
- NULL),
+ 'fornecedor'),
 
 (3,
  'Rockwell Automation',
  'Rockwell Automation do Brasil Ltda.',
  '00000000000303',
  'ROCK2026',
- 'fornecedor',
- NULL),
+ 'fornecedor'),
 
 
 -- =========================================================
 -- CLIENTES
--- fornecedorId = fabricante que fornece os CLPs
 -- =========================================================
 
 (4,
@@ -150,57 +155,61 @@ VALUES
  'Mitsubishi Electric do Brasil Comércio e Serviços Ltda.',
  '00000000000404',
  'MITSU2026',
- 'Automação Industrial',
- 1),
+ 'Automação Industrial'),
 
 (5,
  'Petrobras',
  'Petróleo Brasileiro S.A. - Petrobras',
  '00000000000505',
  'PETRO2026',
- 'Óleo e Gás',
- 1),
+ 'Óleo e Gás'),
 
 (6,
  'Vale',
  'Vale S.A.',
  '00000000000606',
  'VALE2026',
- 'Mineração',
- 2),
+ 'Mineração'),
 
 (7,
  'Gerdau',
  'Gerdau S.A.',
  '00000000000707',
  'GERDAU2026',
- 'Siderurgia',
- 2),
+ 'Siderurgia'),
 
 (8,
  'Suzano',
  'Suzano S.A.',
  '00000000000808',
  'SUZANO2026',
- 'Papel e Celulose',
- 3),
+ 'Papel e Celulose'),
 
 (9,
  'Braskem',
  'Braskem S.A.',
  '00000000000909',
  'BRASK2026',
- 'Petroquímica',
- 1),
+ 'Petroquímica'),
 
 (10,
  'Ambev',
  'Ambev S.A.',
  '00000000001010',
  'AMBEV2026',
- 'Bebidas',
- 3);
+ 'Bebidas');
  
+ -- ===============================================
+ -- ATIVAÇÃO
+ -- ===============================================
+ INSERT INTO ativacao(idFornecedor, idCliente) VALUES
+ (1,4),
+ (1,5),
+ (2,6),
+ (2,7),
+ (3,8),
+ (1,9),
+ (3,10);
  
  -- ===============================================
  -- USUÁRIOS (inclui as proto-personas)
