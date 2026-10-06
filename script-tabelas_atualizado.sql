@@ -101,12 +101,12 @@ CREATE TABLE clp_medicao(
 -- ========================================
 -- CLIENTES
 -- 4 = Mitsubishi Electric
-5 = Petrobras
-6 = Vale
-7 = Gerdau
-8 = Suzano
-9 = Braskem
-10 = Ambev
+-- 5 = Petrobras
+-- 6 = Vale
+-- 7 = Gerdau
+-- 8 = Suzano
+-- 9 = Braskem
+-- 10 = Ambev
 -- =========================================================
 -- FORNECEDORES / FABRICANTES DE CLP
 -- fornecedorId = NULL
@@ -343,6 +343,356 @@ VALUES
  'PROCESSOS',
  'Ranking dos processos que apresentam maior utilização de CPU no sistema monitorado.')
 ;
+
+-- =========================================================
+-- CLPs DOS CLIENTES
+-- =========================================================
+
+INSERT INTO clp
+(idClp, empresaId, status, localizacao, modeloId)
+VALUES
+
+-- =========================================================
+-- MITSUBISHI ELECTRIC
+-- Cliente: Siemens
+-- =========================================================
+
+(1,
+ 4,
+ 1,
+ 'Planta Industrial - Linha de Produção 01',
+ 1),
+
+(2,
+ 4,
+ 1,
+ 'Planta Industrial - Linha de Produção 02',
+ 2),
+
+(3,
+ 4,
+ 0,
+ 'Planta Industrial - Área de Envase',
+ 1),
+
+
+-- =========================================================
+-- PETROBRAS
+-- =========================================================
+
+(4,
+ 5,
+ 1,
+ 'Plataforma Offshore - Sala de Controle',
+ 2),
+
+(5,
+ 5,
+ 1,
+ 'Plataforma Offshore - Sistema de Compressão',
+ 2),
+
+(6,
+ 5,
+ 0,
+ 'Plataforma Offshore - Sistema de Bombeamento',
+ 1),
+
+
+-- =========================================================
+-- VALE
+-- =========================================================
+
+(7,
+ 6,
+ 1,
+ 'Complexo Industrial - Britagem',
+ 4),
+
+(8,
+ 6,
+ 1,
+ 'Complexo Industrial - Correias Transportadoras',
+ 3),
+
+(9,
+ 6,
+ 0,
+ 'Complexo Industrial - Beneficiamento',
+ 4),
+
+
+-- =========================================================
+-- GERDAU
+-- =========================================================
+
+(10,
+ 7,
+ 1,
+ 'Usina - Linha de Laminação',
+ 3),
+
+(11,
+ 7,
+ 1,
+ 'Usina - Forno Industrial',
+ 4),
+
+
+-- =========================================================
+-- SUZANO
+-- =========================================================
+
+(12,
+ 8,
+ 1,
+ 'Unidade Industrial - Linha de Celulose',
+ 5),
+
+(13,
+ 8,
+ 0,
+ 'Unidade Industrial - Caldeira',
+ 6),
+
+
+-- =========================================================
+-- BRASKEM
+-- =========================================================
+
+(14,
+ 9,
+ 1,
+ 'Polo Petroquímico - Unidade de Produção',
+ 1),
+
+(15,
+ 9,
+ 1,
+ 'Polo Petroquímico - Sistema de Resfriamento',
+ 2),
+
+
+-- =========================================================
+-- AMBEV
+-- =========================================================
+
+(16,
+ 10,
+ 1,
+ 'Fábrica - Linha de Envase',
+ 5),
+
+(17,
+ 10,
+ 1,
+ 'Fábrica - Linha de Produção',
+ 6);
+ 
+ 
+ -- Mitsubishi — CLP 1
+ INSERT INTO clp_medicao
+(clpId, tipoMedicaoId, ativo, parametro)
+VALUES
+
+(1, 1, 1, 80),   -- CPU
+(1, 2, 1, 80),   -- RAM
+(1, 3, 1, 95),   -- Uptime
+(1, 4, 1, 80),   -- Swap
+(1, 5, 1, 100),  -- Scan Time
+(1, 6, 1, 100),  -- Latência
+(1, 7, 1, 1),    -- Perda de pacotes
+(1, 8, 1, 0),    -- Upload
+(1, 9, 1, 0),    -- Download
+(1, 10, 1, 3);   -- Top 3 processos
+
+-- Mitsubishi — CLP 2
+INSERT INTO clp_medicao
+(clpId, tipoMedicaoId, ativo, parametro)
+VALUES
+
+(2, 1, 1, 80),
+(2, 2, 1, 80),
+(2, 3, 1, 95),
+(2, 4, 1, 80),
+(2, 5, 1, 100),
+(2, 6, 1, 100),
+(2, 10, 1, 3);
+
+
+-- Mitsubishi — CLP 3
+INSERT INTO clp_medicao
+(clpId, tipoMedicaoId, ativo, parametro)
+VALUES
+
+(3, 1, 1, 80),
+(3, 2, 1, 80),
+(3, 5, 1, 100),
+(3, 6, 1, 100),
+(3, 7, 1, 1);
+
+
+-- Petrobras — CLPs 4, 5 e 6
+INSERT INTO clp_medicao
+(clpId, tipoMedicaoId, ativo, parametro)
+VALUES
+
+-- CLP 4
+(4, 1, 1, 80),
+(4, 2, 1, 80),
+(4, 3, 1, 95),
+(4, 4, 1, 80),
+(4, 5, 1, 100),
+(4, 6, 1, 100),
+(4, 7, 1, 1),
+(4, 8, 1, 0),
+(4, 9, 1, 0),
+(4, 10, 1, 3),
+
+-- CLP 5
+(5, 1, 1, 80),
+(5, 2, 1, 80),
+(5, 3, 1, 95),
+(5, 4, 1, 80),
+(5, 5, 1, 100),
+(5, 6, 1, 100),
+(5, 7, 1, 1),
+(5, 10, 1, 3),
+
+-- CLP 6
+(6, 1, 1, 80),
+(6, 2, 1, 80),
+(6, 5, 1, 100),
+(6, 6, 1, 100),
+(6, 7, 1, 1);
+
+
+-- Vale — CLPs 7, 8 e 9
+INSERT INTO clp_medicao
+(clpId, tipoMedicaoId, ativo, parametro)
+VALUES
+
+-- CLP 7
+(7, 1, 1, 80),
+(7, 2, 1, 80),
+(7, 3, 1, 95),
+(7, 4, 1, 80),
+(7, 5, 1, 100),
+(7, 6, 1, 100),
+(7, 10, 1, 3),
+
+-- CLP 8
+(8, 1, 1, 80),
+(8, 2, 1, 80),
+(8, 5, 1, 100),
+(8, 6, 1, 100),
+(8, 7, 1, 1),
+(8, 8, 1, 0),
+(8, 9, 1, 0),
+
+-- CLP 9
+(9, 1, 1, 80),
+(9, 2, 1, 80),
+(9, 4, 1, 80),
+(9, 5, 1, 100),
+(9, 6, 1, 100);
+
+
+-- Gerdau — CLPs 10 e 11
+INSERT INTO clp_medicao
+(clpId, tipoMedicaoId, ativo, parametro)
+VALUES
+
+-- CLP 10
+(10, 1, 1, 80),
+(10, 2, 1, 80),
+(10, 3, 1, 95),
+(10, 4, 1, 80),
+(10, 5, 1, 100),
+(10, 6, 1, 100),
+(10, 7, 1, 1),
+(10, 10, 1, 3),
+
+-- CLP 11
+(11, 1, 1, 80),
+(11, 2, 1, 80),
+(11, 5, 1, 100),
+(11, 6, 1, 100),
+(11, 8, 1, 0),
+(11, 9, 1, 0);
+
+-- Suzano — CLPs 12 e 13
+INSERT INTO clp_medicao
+(clpId, tipoMedicaoId, ativo, parametro)
+VALUES
+
+-- CLP 12
+(12, 1, 1, 80),
+(12, 2, 1, 80),
+(12, 3, 1, 95),
+(12, 4, 1, 80),
+(12, 5, 1, 100),
+(12, 6, 1, 100),
+(12, 7, 1, 1),
+(12, 10, 1, 3),
+
+-- CLP 13
+(13, 1, 1, 80),
+(13, 2, 1, 80),
+(13, 5, 1, 100),
+(13, 6, 1, 100),
+(13, 7, 1, 1);
+
+-- Braskem — CLPs 14 e 15
+INSERT INTO clp_medicao
+(clpId, tipoMedicaoId, ativo, parametro)
+VALUES
+
+-- CLP 14
+(14, 1, 1, 80),
+(14, 2, 1, 80),
+(14, 3, 1, 95),
+(14, 4, 1, 80),
+(14, 5, 1, 100),
+(14, 6, 1, 100),
+(14, 7, 1, 1),
+(14, 8, 1, 0),
+(14, 9, 1, 0),
+(14, 10, 1, 3),
+
+-- CLP 15
+(15, 1, 1, 80),
+(15, 2, 1, 80),
+(15, 5, 1, 100),
+(15, 6, 1, 100),
+(15, 10, 1, 3);
+
+-- Ambev — CLPs 16 e 17
+INSERT INTO clp_medicao
+(clpId, tipoMedicaoId, ativo, parametro)
+VALUES
+
+-- CLP 16
+(16, 1, 1, 80),
+(16, 2, 1, 80),
+(16, 3, 1, 95),
+(16, 4, 1, 80),
+(16, 5, 1, 100),
+(16, 6, 1, 100),
+(16, 7, 1, 1),
+(16, 8, 1, 0),
+(16, 9, 1, 0),
+(16, 10, 1, 3),
+
+-- CLP 17
+(17, 1, 1, 80),
+(17, 2, 1, 80),
+(17, 5, 1, 100),
+(17, 6, 1, 100),
+(17, 7, 1, 1),
+(17, 10, 1, 3);
+
+
 
 
  
