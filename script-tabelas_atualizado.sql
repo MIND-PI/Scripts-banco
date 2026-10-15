@@ -11,12 +11,7 @@ CREATE TABLE empresa(
     data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     codigo_ativacao VARCHAR(16),
     setor VARCHAR(100) DEFAULT 'fornecedor',
-    tipo VARCHAR(100) DEFAULT 'fornecedor' CHECK (tipo IN ('fornecedor', 'cliente fornecedor')) NOT NULL,
-    fornecedorId INT,
-
-    CONSTRAINT fk_empresa_fornecedor
-        FOREIGN KEY (fornecedorId)
-        REFERENCES empresa(idEmpresa)
+    tipo VARCHAR(100) DEFAULT 'fornecedor' CHECK (tipo IN ('fornecedor', 'cliente fornecedor')) NOT NULL
 );
 
 CREATE TABLE ativacao(
