@@ -252,7 +252,7 @@ VALUES
 (5, 'Fernanda Lima', 'fernanda.lima@siemens.com', 'urubu100', 1, 'funcionario', 1, NULL),
 (6, 'Rafael Souza', 'rafael.souza@siemens.com', 'urubu100', 1, 'funcionario', 1, NULL),
 
--- Gerdau | Analista de Manutenção (responsável = Fernanda Costa)
+-- Siemens | Analista de Pós Venda (responsável = Lídia)
 (7, 'Amanda Moreira', 'amanda.moreira@siemens.com', 'urubu100', 1, 'funcionario', 1, NULL),
 
 -- Siemens (responsável = Lídia)
@@ -404,7 +404,14 @@ VALUES
  'Processos de Maior Consumo',
  'processos',
  'PROCESSOS',
- 'Ranking dos processos que apresentam maior utilização de CPU no sistema monitorado.');
+ 'Ranking dos processos que apresentam maior utilização de CPU no sistema monitorado.'),
+
+-- 11
+(11,
+ 'Health Score',
+ 'pontos',
+ 'HEALTH',
+ 'Pontuação de 0 a 100 que resume a saúde geral do sistema monitorado, combinando as demais métricas.');
 
 -- =========================================================
 -- CLPs DOS CLIENTES
@@ -449,6 +456,7 @@ VALUES
 -- =========================================================
 -- MEDIÇÕES DOS CLPs
 -- Upload/Download: limite de 500 GB acumulados
+-- Health Score: limite mínimo de 70 pontos
 -- =========================================================
 
 -- Mitsubishi Electric — CLP 1
@@ -465,20 +473,25 @@ VALUES
 (1, 7, 1, 1),     -- Perda de pacotes
 (1, 8, 1, 500),   -- Upload
 (1, 9, 1, 500),   -- Download
-(1, 10, 1, 3);    -- Top 3 processos
+(1, 10, 1, 3),    -- Top 3 processos
+(1, 11, 1, 70);   -- Health Score
 
 -- Mitsubishi Electric — CLP 2
 INSERT INTO clp_medicao
 (clpId, tipoMedicaoId, status, parametro)
 VALUES
 
-(2, 1, 1, 80),
-(2, 2, 1, 80),
-(2, 3, 1, 95),
-(2, 4, 1, 80),
-(2, 5, 1, 100),
-(2, 6, 1, 100),
-(2, 10, 1, 3);
+(2, 1, 1, 80),    -- CPU
+(2, 2, 1, 80),    -- RAM
+(2, 3, 1, 95),    -- Uptime
+(2, 4, 1, 80),    -- Swap
+(2, 5, 1, 100),   -- Scan Time
+(2, 6, 1, 100),   -- Latência
+(2, 7, 1, 1),     -- Perda de pacotes
+(2, 8, 1, 500),   -- Upload
+(2, 9, 1, 500),   -- Download
+(2, 10, 1, 3),    -- Top 3 processos
+(2, 11, 1, 70);   -- Health Score
 
 
 -- Mitsubishi Electric — CLP 3
@@ -486,11 +499,17 @@ INSERT INTO clp_medicao
 (clpId, tipoMedicaoId, status, parametro)
 VALUES
 
-(3, 1, 1, 80),
-(3, 2, 1, 80),
-(3, 5, 1, 100),
-(3, 6, 1, 100),
-(3, 7, 1, 1);
+(3, 1, 1, 80),    -- CPU
+(3, 2, 1, 80),    -- RAM
+(3, 3, 1, 95),    -- Uptime
+(3, 4, 1, 80),    -- Swap
+(3, 5, 1, 100),   -- Scan Time
+(3, 6, 1, 100),   -- Latência
+(3, 7, 1, 1),     -- Perda de pacotes
+(3, 8, 1, 500),   -- Upload
+(3, 9, 1, 500),   -- Download
+(3, 10, 1, 3),    -- Top 3 processos
+(3, 11, 1, 70);   -- Health Score
 
 
 -- Petrobras — CLPs 4, 5 e 6
