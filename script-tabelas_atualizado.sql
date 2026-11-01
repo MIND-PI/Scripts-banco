@@ -83,13 +83,18 @@ CREATE TABLE clp(
 -- Pode usar tudo que o script importa ou define (psutil, time, socket, b_to_gb,
 -- cpu(), scan_time(), medir_latencia(), get_top_processos()...).
 -- NULL = a medição não é coletada na máquina (é calculada depois, no ETL).
+--
+-- biblioteca: módulos que o comando precisa, separados por vírgula (ex.: 'platform'
+-- ou 'platform,shutil'). O script importa uma vez cada módulo (sem repetir), só se
+-- for da biblioteca padrão do Python. NULL = o comando não precisa de módulo extra.
 CREATE TABLE tipo_medicao(
 	idTipoMedicao INT PRIMARY KEY AUTO_INCREMENT,
 	nome VARCHAR(100),
 	unidade_medida VARCHAR(100),
 	apelido VARCHAR(45),
 	descricao TEXT,
-	comando TEXT
+	comando TEXT,
+	biblioteca VARCHAR(200)
 );
 
 CREATE TABLE clp_medicao(
@@ -339,7 +344,7 @@ VALUES
 -- =========================================================
 
 INSERT INTO tipo_medicao
-(idTipoMedicao, nome, unidade_medida, apelido, descricao, comando)
+(idTipoMedicao, nome, unidade_medida, apelido, descricao, comando, biblioteca)
 VALUES
 
 -- 1
@@ -348,7 +353,8 @@ VALUES
  '%',
  'CPU',
  'Percentual de utilização do processador do sistema monitorado.',
- 'cpu()'),
+ 'cpu()',
+ NULL),
 
 -- 2
 (2,
@@ -356,7 +362,8 @@ VALUES
  '%',
  'RAM',
  'Percentual de utilização da memória RAM do sistema monitorado.',
- 'psutil.virtual_memory().percent'),
+ 'psutil.virtual_memory().percent',
+ NULL),
 
 -- 3 (o comando devolve os segundos desde o boot)
 (3,
@@ -364,7 +371,8 @@ VALUES
  '%',
  'UPTIME',
  'Percentual de disponibilidade do sistema durante o período monitorado.',
- 'time.time() - psutil.boot_time()'),
+ 'time.time() - psutil.boot_time()',
+ NULL),
 
 -- 4
 (4,
@@ -372,7 +380,8 @@ VALUES
  '%',
  'SWAP',
  'Percentual de utilização da memória swap do sistema.',
- 'psutil.swap_memory().percent'),
+ 'psutil.swap_memory().percent',
+ NULL),
 
 -- 5
 (5,
@@ -380,7 +389,8 @@ VALUES
  'ms',
  'SCAN',
  'Tempo necessário para a execução de um ciclo do sistema monitorado.',
- 'scan_time()'),
+ 'scan_time()',
+ NULL),
 
 -- 6
 (6,
@@ -388,7 +398,8 @@ VALUES
  'ms',
  'PING',
  'Tempo de resposta da comunicação entre o sistema monitorado e o destino configurado.',
- 'medir_latencia("8.8.8.8")'),
+ 'medir_latencia("8.8.8.8")',
+ NULL),
 
 -- 7
 (7,
@@ -396,7 +407,8 @@ VALUES
  'pacotes',
  'LOSS',
  'Quantidade de pacotes perdidos durante a comunicação de rede do sistema monitorado.',
- 'psutil.net_io_counters().errin + psutil.net_io_counters().errout'),
+ 'psutil.net_io_counters().errin + psutil.net_io_counters().errout',
+ NULL),
 
 -- 8
 (8,
@@ -404,7 +416,8 @@ VALUES
  'GB',
  'UPLOAD',
  'Quantidade acumulada de dados enviados pela interface de rede.',
- 'psutil.net_io_counters().bytes_sent / b_to_gb'),
+ 'psutil.net_io_counters().bytes_sent / b_to_gb',
+ NULL),
 
 -- 9
 (9,
@@ -412,7 +425,8 @@ VALUES
  'GB',
  'DOWNLOAD',
  'Quantidade acumulada de dados recebidos pela interface de rede.',
- 'psutil.net_io_counters().bytes_recv / b_to_gb'),
+ 'psutil.net_io_counters().bytes_recv / b_to_gb',
+ NULL),
 
 -- 10
 (10,
@@ -420,7 +434,8 @@ VALUES
  'processos',
  'PROCESSOS',
  'Ranking dos processos que apresentam maior utilização de CPU no sistema monitorado.',
- 'get_top_processos(3)'),
+ 'get_top_processos(3)',
+ NULL),
 
 -- 11 (sem comando: calculado no ETL a partir das demais métricas)
 (11,
@@ -428,6 +443,7 @@ VALUES
  'pontos',
  'HEALTH',
  'Pontuação de 0 a 100 que resume a saúde geral do sistema monitorado, combinando as demais métricas.',
+ NULL,
  NULL);
 
 -- =========================================================
@@ -688,4 +704,3 @@ VALUES
 (17, 6, 1, 100),
 (17, 7, 1, 1),
 (17, 10, 1, 3);
-
