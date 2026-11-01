@@ -78,12 +78,18 @@ CREATE TABLE clp(
 		REFERENCES modelo(idmodelo)
 );
 
+-- comando: expressão em Python que o script de coleta executa na máquina
+-- para obter o valor da medição (ex.: 'psutil.virtual_memory().percent').
+-- Pode usar tudo que o script importa ou define (psutil, time, socket, b_to_gb,
+-- cpu(), scan_time(), medir_latencia(), get_top_processos()...).
+-- NULL = a medição não é coletada na máquina (é calculada depois, no ETL).
 CREATE TABLE tipo_medicao(
 	idTipoMedicao INT PRIMARY KEY AUTO_INCREMENT,
 	nome VARCHAR(100),
 	unidade_medida VARCHAR(100),
 	apelido VARCHAR(45),
-	descricao TEXT
+	descricao TEXT,
+	comando TEXT
 );
 
 CREATE TABLE clp_medicao(
@@ -329,11 +335,11 @@ VALUES
 (6, 'CompactLogix', 3);
 
 -- =========================================================
--- TIPOS DE MEDIÇÃO
+-- TIPOS DE MEDIÇÃO (com o comando de coleta de cada uma)
 -- =========================================================
 
 INSERT INTO tipo_medicao
-(idTipoMedicao, nome, unidade_medida, apelido, descricao)
+(idTipoMedicao, nome, unidade_medida, apelido, descricao, comando)
 VALUES
 
 -- 1
@@ -341,77 +347,88 @@ VALUES
  'Utilização de CPU',
  '%',
  'CPU',
- 'Percentual de utilização do processador do sistema monitorado.'),
+ 'Percentual de utilização do processador do sistema monitorado.',
+ 'cpu()'),
 
 -- 2
 (2,
  'Utilização de RAM',
  '%',
  'RAM',
- 'Percentual de utilização da memória RAM do sistema monitorado.'),
+ 'Percentual de utilização da memória RAM do sistema monitorado.',
+ 'psutil.virtual_memory().percent'),
 
--- 3
+-- 3 (o comando devolve os segundos desde o boot)
 (3,
  'Uptime do Sistema',
  '%',
  'UPTIME',
- 'Percentual de disponibilidade do sistema durante o período monitorado.'),
+ 'Percentual de disponibilidade do sistema durante o período monitorado.',
+ 'time.time() - psutil.boot_time()'),
 
 -- 4
 (4,
  'Utilização de Memória Swap',
  '%',
  'SWAP',
- 'Percentual de utilização da memória swap do sistema.'),
+ 'Percentual de utilização da memória swap do sistema.',
+ 'psutil.swap_memory().percent'),
 
 -- 5
 (5,
  'Scan Time',
  'ms',
  'SCAN',
- 'Tempo necessário para a execução de um ciclo do sistema monitorado.'),
+ 'Tempo necessário para a execução de um ciclo do sistema monitorado.',
+ 'scan_time()'),
 
 -- 6
 (6,
  'Latência de Rede',
  'ms',
  'PING',
- 'Tempo de resposta da comunicação entre o sistema monitorado e o destino configurado.'),
+ 'Tempo de resposta da comunicação entre o sistema monitorado e o destino configurado.',
+ 'medir_latencia("8.8.8.8")'),
 
 -- 7
 (7,
  'Perda de Pacotes',
  'pacotes',
  'LOSS',
- 'Quantidade de pacotes perdidos durante a comunicação de rede do sistema monitorado.'),
+ 'Quantidade de pacotes perdidos durante a comunicação de rede do sistema monitorado.',
+ 'psutil.net_io_counters().errin + psutil.net_io_counters().errout'),
 
 -- 8
 (8,
  'Dados Enviados',
  'GB',
  'UPLOAD',
- 'Quantidade acumulada de dados enviados pela interface de rede.'),
+ 'Quantidade acumulada de dados enviados pela interface de rede.',
+ 'psutil.net_io_counters().bytes_sent / b_to_gb'),
 
 -- 9
 (9,
  'Dados Recebidos',
  'GB',
  'DOWNLOAD',
- 'Quantidade acumulada de dados recebidos pela interface de rede.'),
+ 'Quantidade acumulada de dados recebidos pela interface de rede.',
+ 'psutil.net_io_counters().bytes_recv / b_to_gb'),
 
 -- 10
 (10,
  'Processos de Maior Consumo',
  'processos',
  'PROCESSOS',
- 'Ranking dos processos que apresentam maior utilização de CPU no sistema monitorado.'),
+ 'Ranking dos processos que apresentam maior utilização de CPU no sistema monitorado.',
+ 'get_top_processos(3)'),
 
--- 11
+-- 11 (sem comando: calculado no ETL a partir das demais métricas)
 (11,
  'Health Score',
  'pontos',
  'HEALTH',
- 'Pontuação de 0 a 100 que resume a saúde geral do sistema monitorado, combinando as demais métricas.');
+ 'Pontuação de 0 a 100 que resume a saúde geral do sistema monitorado, combinando as demais métricas.',
+ NULL);
 
 -- =========================================================
 -- CLPs DOS CLIENTES
@@ -671,3 +688,4 @@ VALUES
 (17, 6, 1, 100),
 (17, 7, 1, 1),
 (17, 10, 1, 3);
+
