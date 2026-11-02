@@ -11,7 +11,8 @@ CREATE TABLE empresa(
 	data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	codigo_ativacao VARCHAR(16),
 	setor VARCHAR(100) DEFAULT 'fornecedor',
-	tipo VARCHAR(100) DEFAULT 'fornecedor' CHECK (tipo IN ('fornecedor', 'cliente fornecedor')) NOT NULL
+	tipo VARCHAR(100) DEFAULT 'fornecedor' CHECK (tipo IN ('fornecedor', 'cliente fornecedor')) NOT NULL,
+	status TINYINT DEFAULT 1
 );
 
 CREATE TABLE ativacao(
