@@ -12,7 +12,7 @@ CREATE TABLE empresa(
 	codigo_ativacao VARCHAR(16),
 	setor VARCHAR(100) DEFAULT 'fornecedor',
 	tipo VARCHAR(100) DEFAULT 'fornecedor' CHECK (tipo IN ('fornecedor', 'cliente fornecedor')) NOT NULL,
-
+	status TINYINT DEFAULT 1
 );
 
 CREATE TABLE ativacao(
