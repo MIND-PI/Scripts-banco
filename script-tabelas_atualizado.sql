@@ -12,7 +12,7 @@ CREATE TABLE empresa(
 	codigo_ativacao VARCHAR(16),
 	setor VARCHAR(100) DEFAULT 'fornecedor',
 	tipo VARCHAR(100) DEFAULT 'fornecedor' CHECK (tipo IN ('fornecedor', 'cliente fornecedor')) NOT NULL,
-	status TINYINT DEFAULT 1
+
 );
 
 CREATE TABLE ativacao(
@@ -35,6 +35,7 @@ CREATE TABLE usuario(
 	data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
 	data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	url_img VARCHAR(1000),
+	status TINYINT DEFAULT 1,
 
 	CONSTRAINT chk_usuario_cargo
 		CHECK (cargo IN ('administrador', 'funcionario')),
