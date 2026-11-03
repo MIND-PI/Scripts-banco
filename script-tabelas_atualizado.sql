@@ -18,6 +18,7 @@ CREATE TABLE empresa(
 CREATE TABLE ativacao(
 	idFornecedor INT,
 	idCliente INT,
+	status TINYINT DEFAULT 1
 	PRIMARY KEY(idFornecedor, idCliente),
 
 	FOREIGN KEY (idFornecedor) REFERENCES empresa(idEmpresa),
