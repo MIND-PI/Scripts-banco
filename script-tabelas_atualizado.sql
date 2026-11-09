@@ -64,11 +64,11 @@ CREATE TABLE modelo(
 );
 
 CREATE TABLE localizacao(
-	idLocalizacao INT AUTO_INCREMENT,
-	empresaId INT,
-    nome VARCHAR(255),
-	PRIMARY KEY(idLocalizacao, empresaId),
+	idLocalizacao INT PRIMARY KEY AUTO_INCREMENT,
+	empresaId INT NOT NULL,
+	nome VARCHAR(255) NOT NULL,
 
+	UNIQUE KEY uq_localizacao_empresa_nome (empresaId, nome),
 	FOREIGN KEY (empresaId) REFERENCES empresa(idEmpresa)
 );
 
@@ -434,37 +434,37 @@ VALUES
 -- =========================================================
 -- LOCALIZAÇÕES
 -- =========================================================
-INSERT INTO localizacao (idLocalizacao, empresaId, nome) VALUES
+INSERT INTO localizacao (empresaId, nome) VALUES
 -- Mitsubishi Electric (empresaId = 4)
-(1, 4, 'Planta Industrial - Linha de Produção 01'),
-(2, 4, 'Planta Industrial - Linha de Produção 02'),
-(3, 4, 'Planta Industrial - Área de Envase'),
+(4, 'Planta Industrial - Linha de Produção 01'),
+(4, 'Planta Industrial - Linha de Produção 02'),
+(4, 'Planta Industrial - Área de Envase'),
 
 -- Petrobras (empresaId = 5)
-(1, 5, 'Plataforma Offshore - Sala de Controle'),
-(2, 5, 'Plataforma Offshore - Sistema de Compressão'),
-(3, 5, 'Plataforma Offshore - Sistema de Bombeamento'),
+(5, 'Plataforma Offshore - Sala de Controle'),
+(5, 'Plataforma Offshore - Sistema de Compressão'),
+(5, 'Plataforma Offshore - Sistema de Bombeamento'),
 
 -- Vale (empresaId = 6)
-(1, 6, 'Complexo Industrial - Britagem'),
-(2, 6, 'Complexo Industrial - Correias Transportadoras'),
-(3, 6, 'Complexo Industrial - Beneficiamento'),
+(6, 'Complexo Industrial - Britagem'),
+(6, 'Complexo Industrial - Correias Transportadoras'),
+(6, 'Complexo Industrial - Beneficiamento'),
 
 -- Gerdau (empresaId = 7)
-(1, 7, 'Usina - Linha de Laminação'),
-(2, 7, 'Usina - Forno Industrial'),
+(7, 'Usina - Linha de Laminação'),
+(7, 'Usina - Forno Industrial'),
 
 -- Suzano (empresaId = 8)
-(1, 8, 'Unidade Industrial - Linha de Celulose'),
-(2, 8, 'Unidade Industrial - Caldeira'),
+(8, 'Unidade Industrial - Linha de Celulose'),
+(8, 'Unidade Industrial - Caldeira'),
 
 -- Braskem (empresaId = 9)
-(1, 9, 'Polo Petroquímico - Unidade de Produção'),
-(2, 9, 'Polo Petroquímico - Sistema de Resfriamento'),
+(9, 'Polo Petroquímico - Unidade de Produção'),
+(9, 'Polo Petroquímico - Sistema de Resfriamento'),
 
 -- Ambev (empresaId = 10)
-(1, 10, 'Fábrica - Linha de Envase'),
-(2, 10, 'Fábrica - Linha de Produção');
+(10, 'Fábrica - Linha de Envase'),
+(10, 'Fábrica - Linha de Produção');
 
 -- =========================================================
 -- CLPs DOS CLIENTES
